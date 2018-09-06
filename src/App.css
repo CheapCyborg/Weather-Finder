@@ -12,13 +12,13 @@ body {
   flex: 0 1 60vw;
 }
 
-.box {
-  position: absolute;
-  bottom: 50%;
+.box-container {
+  position: relative;
+  display: inline;
 }
 
-.box2 {
-
+.box {
+  position: relative;
 }
 
 .form-container {
@@ -46,25 +46,30 @@ body {
 }
 
 .form:focus {
-  width: 40%;
+  width: 30%;
 }
 
 .title {
   font-weight: 700;
   font-size: 6rem;
-  display: flex;
-  flex: 0 1 40vw;
-  height: 20vh;
   justify-content: center;
   align-items: center;
   text-align: center;
   padding-right: 1rem;
   padding-left: 1rem;
+  text-transform: capitalize;
 }
 
 .location {
   font-weight: 500;
-  font-size: 6rem;
+  font-size: 10rem;
+   text-transform: capitalize;
+}
+
+.description {
+  font-weight: 300;
+  font-size: 7rem;
+  text-transform: capitalize;
 }
 
 .btn {
@@ -83,7 +88,7 @@ body {
   color: #cccccc;
 }
 
-.container {
+.box-container {
   max-width: 900px;
   margin: auto;
   justify-content: center;
@@ -92,9 +97,16 @@ body {
 }
 
 .big-icon {
-  padding: 3rem;
-  font-size: 5rem;
+  font-size: 15rem;
   color: #f16541;
-  transition: 200ms;
+
 }
 
+.bigger-icon {
+  font-size: 5rem;
+  color: #bf112e;
+}
+.temp-text{
+  color: #cccccc;
+  font-size: 2rem;
+}

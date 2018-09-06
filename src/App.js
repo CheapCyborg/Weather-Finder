@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import $ from 'jquery';
+import $ from "jquery";
 import Titles from "./components/Title";
 import Form from "./components/Form";
 import Weather from "./components/Weather";
@@ -10,8 +10,10 @@ let count = 0;
 export default class App extends Component {
   state = {
     conditions: 0,
-    tempature: "",
-    humidity: "",
+    tempature: 0,
+    low: 0,
+    high: 0,
+    humidity: 0,
     city: "",
     country: "",
     description: "",
@@ -19,17 +21,6 @@ export default class App extends Component {
     forecast: null,
     error: null
   };
-  componentDidUpdate() {
-    console.log("update");
-    count++;
-    console.log("render");
-    if (count === 1) {
-      $(".box2").animate({
-        marginTop: "-=90%"
-      }, 2000);
-    }
-    console.log(count);
-  }
 
   getWeather = async e => {
     e.preventDefault();
@@ -44,12 +35,13 @@ export default class App extends Component {
       this.setState({
         error: data.message
       });
-    } 
-    else {
+    } else {
       this.setState(
         {
           conditions: data.weather[0].id,
           tempature: data.main.temp,
+          low: data.main.temp_min,
+          high: data.main.temp_max,
           humidity: data.main.humidity,
           city: data.name,
           country: data.sys.country,
@@ -90,20 +82,21 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <div className="box2">
-          <Titles />
-          <Form getWeather={this.getWeather} />
+      <div className="container-fluid">
+        <Form getWeather={this.getWeather} />
+        <div className="box">
+          <Weather
+            conditions={this.state.conditions}
+            tempature={this.state.tempature}
+            low={this.state.low}
+            high={this.state.high}
+            humidity={this.state.humidity}
+            city={this.state.city}
+            country={this.state.country}
+            description={this.state.description}
+            error={this.state.error}
+          />
         </div>
-        <Weather
-          conditions={this.state.conditions}
-          tempature={this.state.tempature}
-          humidity={this.state.humidity}
-          city={this.state.city}
-          country={this.state.country}
-          description={this.state.description}
-          error={this.state.error}
-        />
       </div>
     );
   }
