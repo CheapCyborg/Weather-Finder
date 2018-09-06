@@ -9,6 +9,7 @@ let count = 0;
 
 export default class App extends Component {
   state = {
+    id: 0,
     conditions: 0,
     tempature: 0,
     low: 0,
@@ -17,7 +18,6 @@ export default class App extends Component {
     city: "",
     country: "",
     description: "",
-    id: "",
     forecast: null,
     error: null
   };
