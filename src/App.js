@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import $ from "jquery";
-import Titles from "./components/Title";
 import Form from "./components/Form";
 import Weather from "./components/Weather";
 import "./App.css";
 const API_KEY = "e67676f66969cf18ae797f10216c3240";
-let count = 0;
 
 export default class App extends Component {
   state = {
@@ -27,7 +24,7 @@ export default class App extends Component {
     const city = e.target.elements.city.value;
     const country = e.target.elements.country.value;
     const api_call = await fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=imperial&appid=${API_KEY}`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=imperial&appid=${API_KEY}`
     );
     const data = await api_call.json();
     console.log(data);
@@ -39,9 +36,9 @@ export default class App extends Component {
       this.setState(
         {
           conditions: data.weather[0].id,
-          tempature: data.main.temp,
-          low: data.main.temp_min,
-          high: data.main.temp_max,
+          tempature: Math.round(data.main.temp),
+          low: Math.round(data.main.temp_min),
+          high: Math.round(data.main.temp_max),
           humidity: data.main.humidity,
           city: data.name,
           country: data.sys.country,
@@ -59,25 +56,41 @@ export default class App extends Component {
 
   getForecast = async e => {
     const api_call = await fetch(
-      `http://api.openweathermap.org/data/2.5/forecast?id=${
+      `https://api.openweathermap.org/data/2.5/forecast?id=${
         this.state.id
       }&units=imperial&APPID=${API_KEY}`
     );
     const data = await api_call.json();
+    console.log(data);
+    let date = new Date();
+    let dateString = [];
+    let day = {};
     this.setState(
       {
         forecast: data.list
       },
       () => {
+        for (let i = 1; i <= 5; i++) {
+          dateString[i] =
+            date.getUTCFullYear() +
+            "-" +
+            ("0" + (date.getUTCMonth() + 1)).slice(-2) +
+            "-" +
+            ("0" + (date.getUTCDate() + i)).slice(-2) +
+            " ";
+        }
         this.state.forecast.map((forecast, i) => {
-          var forecastString = forecast.dt.toString();
-          var day = forecastString.slice(0, 5);
-          if (forecastString.includes(day)) {
+          let stringForecast = forecast.dt_txt;
+          for (let j = 1; j <= 5; j++) {
+            if(stringForecast.includes(dateString[j])){
+              day[j] += [forecast];
+            }
           }
         });
       }
     );
-    console.log("i just rendered");
+    console.log(day);
+    console.log(day[2])
   };
 
   render() {

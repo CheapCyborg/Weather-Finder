@@ -71,13 +71,19 @@ export default class Weather extends Component {
                         />
                       </div>
                     )}
+                    <p className="temp-text">
+                      <i className="wi wi-direction-down biggish-icon" /> {this.props.low}{" "}
+                      <i className="wi wi-fahrenheit" />
+                    </p>
                     <i className="wi wi-thermometer bigger-icon" />
-                    <p className="temp-text">LOW: {this.props.low}</p>
-                    <p className="temp-text"> HIGH: {this.props.high}</p>
+                    <p className="temp-text">
+                      <i className="wi wi-direction-up biggish-icon" /> {this.props.high}{" "}
+                      <i className="wi wi-fahrenheit" />
+                    </p>
                   </Col>
                   <Col sm={6}>
                     {/* Humidity */}
-                    {this.props.humidity <= 50 &&
+                    {this.props.humidity >= -10 &&
                       this.props.humidity < 70 && (
                         <div>
                           <ProgressBar
